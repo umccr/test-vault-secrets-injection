@@ -13,7 +13,9 @@ before_install:
 install:
 - pip install awscli --upgrade
 - aws --version
-- wget https://releases.hashicorp.com/vault/0.10.3/vault_0.10.3_linux_amd64.zip && unzip -d /tmp vault_0.10.3_linux_amd64.zip
+- mkdir /tmp/vault
+- wget -q https://releases.hashicorp.com/vault/0.10.3/vault_0.10.3_linux_amd64.zip && unzip -d /tmp/vault vault_0.10.3_linux_amd64.zip
+- ls -al /tmp/vault
 - export PATH=$PATH:/tmp/vault
 - vault --version
 script:
