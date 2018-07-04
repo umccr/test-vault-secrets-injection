@@ -3,7 +3,7 @@ set -e
 set -o pipefail
 
 
-temp_role=$(vault write aws/sts/ops_admin_no_mfa ttl=60m -format=json)
+temp_role=$(vault write aws/sts/ops_admin_no_mfa ttl=15m -format=json)
 
 
 
