@@ -1,0 +1,19 @@
+language: python
+branches:
+  only:
+  - master
+notifications:
+  email: false
+  slack:
+    rooms:
+      - umccr:${SLACK_TOKEN}#arteria-dev
+before_install:
+- sudo apt-get update -y --fix-missing
+- sudo apt-get install -y jq wget unzip
+install:
+- pip install awscli --upgrade
+- aws --version
+- wget https://releases.hashicorp.com/vault/0.10.3/vault_0.10.3_linux_amd64.zip && unzip -d /usr/local/bin vault_0.10.3_linux_amd64.zip
+- vault --version
+script:
+- "./build.sh"
