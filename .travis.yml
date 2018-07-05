@@ -6,19 +6,19 @@ notifications:
   email: false
   slack:
     rooms:
-      - umccr:$(vault kv get -format=json kv/slack | jq -r '.data.arteria_dev_token')#arteria-dev
+      secure: IFLqC5/2pE73eiO+rj4ZAxK2bYdbw9o4ajRWfc/v2mnkk2CrGQUgOpcAGCbSXhHREXLjuhA5ZCXicyTqlGGAyhnCe3wku+fKi1EEirKQ0Ml5zvgTCC5Qr/eHzLK1u9+O60wc48okSXILgOKN5p53Y3piJaqGkzhfXBITQJHsaWwgIWHWsnbFuqL5wjX1koW9tPabJx4bNAIARMda6PIxJsun5J2sRWP/F1XeiBR7xtnqnDwNrIdDz92tbSsLi1qaUawMx4GXNaL1G7izR4oufC+k0B8LATZBkleWK3SK7ivOyO4pds30G3uktptlN9uST9G5Ans7tPSyeB2wmDNBLy6wQI743R1AauUD1viQpQXBGXdiRISK7fSzOqSM0Dp89wpjAY6tkdnO7/mIn50hV1RIjYa5U39yD9s8xwR2jgRHL6xnrXOVVGKzpmtpdvzIqU8yK0o4HHEENoILBiHiDsR2hYC2wBPcThyaQE1GZii0vWUs/HrtBaQF1ZP8pS+3J7ADWJHzJTLwpOipgIkG8rlNQEj+xbqOsvuEyjOLXv9s20A4QYQONO8V05hsrjhLfQiqLY8as9T/muIo30uSGPW+BXxsBzNj/uz4/dkK7AEBp6Qv4fTTQjz6ubH4OZBjSoVhLX3WC0KW84sl31JKnoNfRlzHO67RqdaAuSnZmZA=
 before_install:
-  - sudo apt-get update -y --fix-missing
-  - sudo apt-get install -y jq wget unzip
+- sudo apt-get update -y --fix-missing
+- sudo apt-get install -y jq wget unzip
 install:
-  - pip install awscli --upgrade
-  - aws --version
-  - mkdir /tmp/vault
-  - wget -q https://releases.hashicorp.com/vault/0.10.3/vault_0.10.3_linux_amd64.zip && unzip -d /tmp/vault vault_0.10.3_linux_amd64.zip
-  - ls -al /tmp/vault
-  - export PATH=$PATH:/tmp/vault
-  - vault --version
+- pip install awscli --upgrade
+- aws --version
+- mkdir /tmp/vault
+- wget -q https://releases.hashicorp.com/vault/0.10.3/vault_0.10.3_linux_amd64.zip && unzip -d /tmp/vault vault_0.10.3_linux_amd64.zip
+- ls -al /tmp/vault
+- export PATH=$PATH:/tmp/vault
+- vault --version
 script:
-  - "./build.sh"
+- "./build.sh"
 after_success:
-  - "./send-datadog-event.sh test"
+- "./send-datadog-event.sh test"
