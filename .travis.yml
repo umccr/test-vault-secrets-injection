@@ -8,15 +8,17 @@ notifications:
     rooms:
       - umccr:${SLACK_TOKEN}#arteria-dev
 before_install:
-- sudo apt-get update -y --fix-missing
-- sudo apt-get install -y jq wget unzip
+  - sudo apt-get update -y --fix-missing
+  - sudo apt-get install -y jq wget unzip
 install:
-- pip install awscli --upgrade
-- aws --version
-- mkdir /tmp/vault
-- wget -q https://releases.hashicorp.com/vault/0.10.3/vault_0.10.3_linux_amd64.zip && unzip -d /tmp/vault vault_0.10.3_linux_amd64.zip
-- ls -al /tmp/vault
-- export PATH=$PATH:/tmp/vault
-- vault --version
+  - pip install awscli --upgrade
+  - aws --version
+  - mkdir /tmp/vault
+  - wget -q https://releases.hashicorp.com/vault/0.10.3/vault_0.10.3_linux_amd64.zip && unzip -d /tmp/vault vault_0.10.3_linux_amd64.zip
+  - ls -al /tmp/vault
+  - export PATH=$PATH:/tmp/vault
+  - vault --version
 script:
-- "./build.sh"
+  - "./build.sh"
+after_success:
+  - "./send-datadog-event.sh test"
