@@ -11,7 +11,7 @@ DATADOG_API_KEY=$(vault kv get -format=json kv/datadog | jq -r '.data.api_key')
 DATADOG_APP_KEY=$(vault kv get -format=json kv/datadog | jq -r '.data.app_key')
 
 # Set up
-tee ~/.dogrc << END
+cat > ~/.dogrc << END
 [Connection]
 apikey = ${DATADOG_API_KEY}
 appkey = ${DATADOG_APP_KEY}
