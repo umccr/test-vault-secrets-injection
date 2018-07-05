@@ -1,6 +1,6 @@
 #!/bin/bash -e
 set -e
-set -0 pipefail
+set -o pipefail
 
 APP=$1
 
