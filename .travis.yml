@@ -6,7 +6,7 @@ notifications:
   email: false
   slack:
     rooms:
-      - umccr:${SLACK_TOKEN}#arteria-dev
+      - umccr:$(vault kv get -format=json kv/slack | jq -r '.data.arteria_dev_token')#arteria-dev
 before_install:
   - sudo apt-get update -y --fix-missing
   - sudo apt-get install -y jq wget unzip
