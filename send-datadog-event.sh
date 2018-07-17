@@ -7,7 +7,7 @@ APP=$1
 # install DataDog Python library
 pip install datadog
 
-export VAULT_ADD=$VAULT_ADDR_DEV
+export VAULT_ADDR=$VAULT_ADDR_DEV
 export VAULT_TOKEN=$VAULT_TOKEN_DEV
 
 DATADOG_API_KEY=$(vault kv get -format=json kv/datadog | jq -r '.data.api_key')
