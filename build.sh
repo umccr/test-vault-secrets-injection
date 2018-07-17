@@ -3,6 +3,10 @@ set -e
 set -o pipefail
 
 
+export VAULT_ADD=$VAULT_ADDR_DEV
+export VAULT_TOKEN=$VAULT_TOKEN_DEV
+
+
 temp_role=$(vault write aws/sts/ops_admin_no_mfa ttl=15m -format=json)
 
 
