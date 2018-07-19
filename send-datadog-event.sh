@@ -3,6 +3,7 @@ set -e
 set -o pipefail
 
 APP=$1
+TAGS=$2
 
 # install DataDog Python library
 pip install datadog
@@ -21,6 +22,6 @@ appkey = ${DATADOG_APP_KEY}
 END
 
 
-echo "Testing DataDog event generation"
-dog event post --no_host --tags aws,ami,$APP --type travis "New $APP event created" "New DataDog event created for $TRAVIS_COMMIT in umccr/test-vault-secrets-injection"
+echo "Generating DataDog event"
+dog event post --no_host --tags $TAGS --type travis "New $APP event created" "$TRAVIS_REPO_SLUG: new build (no $TRAVIS_BUILD_NUMBER) on branch $TRAVIS_BRANCH succeeded for commit $TRAVIS_COMMIT"
 echo "Event successfully sent."
