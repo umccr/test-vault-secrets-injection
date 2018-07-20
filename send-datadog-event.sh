@@ -5,8 +5,8 @@ set -o pipefail
 APP=$1
 TAGS=$2
 
-export VAULT_ADDR=$VAULT_ADDR_DEV
-export VAULT_TOKEN=$VAULT_TOKEN_DEV
+# export VAULT_ADDR=$VAULT_ADDR_DEV
+# export VAULT_TOKEN=$VAULT_TOKEN_DEV
 
 DATADOG_API_KEY=$(vault kv get -format=json kv/datadog | jq -r '.data.api_key')
 

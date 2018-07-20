@@ -19,6 +19,8 @@ install:
 - export PATH=$PATH:/tmp/vault
 - vault --version
 script:
+- export VAULT_ADDR=$VAULT_ADDR_DEV
+- export VAULT_TOKEN=$VAULT_TOKEN_DEV
 - "./build.sh"
 after_success:
 - "./send-datadog-event.sh test 'test,travis'"
