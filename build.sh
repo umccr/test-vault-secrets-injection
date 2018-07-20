@@ -18,5 +18,5 @@ export AWS_SECRET_ACCESS_KEY=$(echo $temp_role | jq '.data | .secret_key' | xarg
 export AWS_SESSION_TOKEN=$(echo $temp_role | jq '.data | .security_token' | xargs)
 
 # with the new access credentials packer can now build the AMI
-echo "Listing development buckets"
-aws s3 ls
+echo "Number of buckets"
+aws s3 ls | wc -l

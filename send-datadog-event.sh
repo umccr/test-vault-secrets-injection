@@ -23,6 +23,6 @@ END
 
 
 echo "Generating DataDog event"
-event_txt="$TRAVIS_REPO_SLUG: new build (no [$TRAVIS_BUILD_NUMBER](https://travis-ci.org/umccr/test-vault-secrets-injection/builds/$TRAVIS_BUILD_ID)) on branch $TRAVIS_BRANCH succeeded for commit [${TRAVIS_COMMIT:0:12}](https://github.com/umccr/test-vault-secrets-injection/commit/${TRAVIS_COMMIT:0:12})"
-dog event post --no_host --tags $TAGS --type travis "New $APP event created" "$event_text"
+event_txt="%%% \n $TRAVIS_REPO_SLUG: new build (no [$TRAVIS_BUILD_NUMBER](https://travis-ci.org/umccr/test-vault-secrets-injection/builds/$TRAVIS_BUILD_ID)) on branch $TRAVIS_BRANCH succeeded for commit [${TRAVIS_COMMIT:0:12}](https://github.com/umccr/test-vault-secrets-injection/commit/${TRAVIS_COMMIT}) \n %%%"
+dog event post --no_host --tags $TAGS --type travis "New $APP event created" "$event_txt"
 echo "Event successfully sent."
