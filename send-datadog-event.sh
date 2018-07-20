@@ -5,14 +5,11 @@ set -o pipefail
 APP=$1
 TAGS=$2
 
-# export VAULT_ADDR=$VAULT_ADDR_DEV
-# export VAULT_TOKEN=$VAULT_TOKEN_DEV
-
 DATADOG_API_KEY=$(vault kv get -format=json kv/datadog | jq -r '.data.api_key')
 
-echo "Generating DataDog event"
 event_text="%%% \n $TRAVIS_REPO_SLUG: new build (no [$TRAVIS_BUILD_NUMBER](https://travis-ci.org/umccr/test-vault-secrets-injection/builds/$TRAVIS_BUILD_ID)) on branch $TRAVIS_BRANCH succeeded for commit [${TRAVIS_COMMIT:0:12}](https://github.com/umccr/test-vault-secrets-injection/commit/${TRAVIS_COMMIT}) \n %%%"
 
+echo "Generating DataDog event"
 curl -X POST -H "Content-type: application/json" \
 -d "{
       \"title\": \"New $APP event created\",
