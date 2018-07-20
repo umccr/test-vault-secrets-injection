@@ -1,7 +1,7 @@
 language: python
 branches:
   only:
-  - development
+  - master
 notifications:
   email: false
   slack:
@@ -19,8 +19,8 @@ install:
 - export PATH=$PATH:/tmp/vault
 - vault --version
 script:
-- export VAULT_ADDR=$VAULT_ADDR_DEV
-- export VAULT_TOKEN=$VAULT_TOKEN_DEV
+- export VAULT_ADDR=$VAULT_ADDR_PROD
+- export VAULT_TOKEN=$VAULT_TOKEN_PROD
 - "./build.sh"
 after_success:
 - "./send-datadog-event.sh test 'test,travis'"
