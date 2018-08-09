@@ -1,7 +1,14 @@
-language: python
+language: generic
+sudo: required
+services:
+  - docker
 branches:
   only:
   - master
+addons:
+  apt:
+    packages:
+      - docker-ce
 notifications:
   email: false
   slack:
@@ -23,4 +30,5 @@ script:
 - export VAULT_TOKEN=$VAULT_TOKEN_PROD
 - "./build.sh"
 after_success:
+- "./push-to-docker-hub.sh"
 - "./send-datadog-event.sh test 'test,travis'"
