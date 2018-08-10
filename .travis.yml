@@ -1,7 +1,16 @@
 language: python
+sudo: required
+services:
+  - docker
 branches:
   only:
+  - master
   - development
+  - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
+addons:
+  apt:
+    packages:
+      - docker-ce
 notifications:
   email: false
   slack:
@@ -19,8 +28,8 @@ install:
 - export PATH=$PATH:/tmp/vault
 - vault --version
 script:
-- export VAULT_ADDR=$VAULT_ADDR_DEV
-- export VAULT_TOKEN=$VAULT_TOKEN_DEV
+- if [ "$TRAVIS_BRANCH" = "development" ]; then export VAULT_ADDR=$VAULT_ADDR_DEV VAULT_TOKEN=$VAULT_TOKEN_DEV; else export VAULT_ADDR=$VAULT_ADDR_PROD VAULT_TOKEN=$VAULT_TOKEN_PROD; fi
 - "./build.sh"
 after_success:
+- "./push-to-docker-hub.sh"
 - "./send-datadog-event.sh test 'test,travis'"
