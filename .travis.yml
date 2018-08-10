@@ -6,7 +6,7 @@ branches:
   only:
   # not building master, as only versioned stable builds are allowed
   - development
-  - /^\d+\.\d+(\.\d+)?(-\S*)?$/ # version regex for tag commits
+  - /^\d+\.\d+(\.\d+)?(-\w*)?$/ # version regex for tag commits
 addons:
   apt:
     packages:
@@ -33,5 +33,5 @@ install:
 script:
 - ./aws-access.sh
 after_success:
-- ./push-to-docker-hub.sh
+- ./push-to-docker-hub.sh umccr/test-vault-secrets-injection
 - ./send-datadog-event.sh test 'test,travis'
