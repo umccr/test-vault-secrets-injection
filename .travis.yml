@@ -4,9 +4,9 @@ services:
   - docker
 branches:
   only:
-  - master
+  # not building master, as only versioned stable builds are allowed
   - development
-  - /^\d+\.\d+(\.\d+)?(-\S*)?$/
+  - /^\d+\.\d+(\.\d+)?(-\S*)?$/ # version regex for tag commits
 addons:
   apt:
     packages:
@@ -27,9 +27,11 @@ install:
 - ls -al /tmp/vault
 - export PATH=$PATH:/tmp/vault
 - vault --version
-- if [ "$TRAVIS_BRANCH" = "development" ]; then export VAULT_ADDR=$VAULT_ADDR_DEV VAULT_TOKEN=$VAULT_TOKEN_DEV; else export VAULT_ADDR=$VAULT_ADDR_DEV VAULT_TOKEN=$VAULT_TOKEN_DEV; fi
+# configure Vault access via env variables (dependent on GitHub branch/tags)
+# Vault prod does not support this use case yet, so using dev in all cases
+- if [ "$TRAVIS_BRANCH" = "development" ]; then export VAULT_ADDR="$VAULT_ADDR_DEV" VAULT_TOKEN="$VAULT_TOKEN_DEV"; else export VAULT_ADDR="$VAULT_ADDR_DEV" VAULT_TOKEN="$VAULT_TOKEN_DEV"; fi
 script:
-- "./build.sh"
+- ./aws-access.sh
 after_success:
-- "./push-to-docker-hub.sh"
-- "./send-datadog-event.sh test 'test,travis'"
+- ./push-to-docker-hub.sh
+- ./send-datadog-event.sh test 'test,travis'
