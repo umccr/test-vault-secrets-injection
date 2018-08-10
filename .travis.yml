@@ -5,6 +5,8 @@ services:
 branches:
   only:
   - master
+  - development
+  - /^\d+\.\d+(\.\d+)?(-\S*)?$/
 addons:
   apt:
     packages:
@@ -25,9 +27,8 @@ install:
 - ls -al /tmp/vault
 - export PATH=$PATH:/tmp/vault
 - vault --version
+- if [ "$TRAVIS_BRANCH" = "development" ]; then export VAULT_ADDR=$VAULT_ADDR_DEV VAULT_TOKEN=$VAULT_TOKEN_DEV; else export VAULT_ADDR=$VAULT_ADDR_DEV VAULT_TOKEN=$VAULT_TOKEN_DEV; fi
 script:
-- export VAULT_ADDR=$VAULT_ADDR_PROD
-- export VAULT_TOKEN=$VAULT_TOKEN_PROD
 - "./build.sh"
 after_success:
 - "./push-to-docker-hub.sh"
